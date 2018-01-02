@@ -23,24 +23,24 @@ describe "server" do
 
     describe "checkprime" do
       it "returns true for 11" do
-        get "/api", { action: "checkprime", number: "11" }
+        get "/api", { action: "checkprime", value: "11" }
         expect(subject).to include_json(isPrime: true)
       end
 
       it "returns false for 12" do
-        get "/api", { action: "checkprime", number: "12" }
+        get "/api", { action: "checkprime", value: "12" }
         expect(subject).to include_json(isPrime: false)
       end
 
       it "returns false for invalid number" do
-        get "/api", { action: "checkprime", number: "NaN" }
+        get "/api", { action: "checkprime", value: "NaN" }
         expect(subject).to include_json(isPrime: false)
       end
     end
 
     describe "sumandcheck" do
       it "returns true for 11" do
-        get "/api", { action: "sumandcheck", numbers: "1,2,8" }
+        get "/api", { action: "sumandcheck", value: "1,2,8" }
         expect(subject).to include_json(
           result: 11,
           isPrime: true
@@ -48,7 +48,7 @@ describe "server" do
       end
 
       it "returns false for 12" do
-        get "/api", { action: "sumandcheck", numbers: "1,5,6" }
+        get "/api", { action: "sumandcheck", value: "1,5,6" }
         expect(subject).to include_json(
           result: 12,
           isPrime: false
@@ -57,7 +57,7 @@ describe "server" do
       end
 
       it "returns false for invalid numbers" do
-        get "/api", { action: "sumandcheck", numbers: "sladkjhf-,NaN,1" }
+        get "/api", { action: "sumandcheck", value: "sladkjhf-,NaN,1" }
         expect(subject).to include_json(
           result: 1,
           isPrime: false

@@ -12,13 +12,10 @@ get "/api" do
   result =
     case params["action"]
     when "checkprime"
-      { isPrime: Prime.prime?(params["number"].to_i) }
+      { result: params["value"], isPrime: Prime.prime?(params["value"].to_i) }
     when "sumandcheck"
-      sum = params["numbers"].split(",").map(&:to_i).sum
-      {
-        value: sum,
-        isPrime: Prime.prime?(sum)
-      }
+      sum = params["value"].split(",").map(&:to_i).sum
+      { result: sum, isPrime: Prime.prime?(sum) }
     else
       {}
     end
