@@ -1,6 +1,6 @@
 //@format
 const {h, app} = hyperapp;
-const {div, h2, input, button} = html;
+const {div, h2, input} = html;
 
 const state = {
   result: 0,
@@ -15,8 +15,13 @@ const actions = {
       .then(data => actions.setState(data))
       .catch(err => console.log(err)),
   check: input => (state, actions) => {
+    // If input contains only digits => checkprime
+    // If input contains only digits and plus => sumandcheck
     if (/^\d+$/.test(input)) {
-      actions.fetchResult({action: 'checkprime', input: input});
+      actions.fetchResult({
+        action: 'checkprime',
+        input: input,
+      });
     } else if (/^[0-9\+]*.\d$/.test(input)) {
       actions.fetchResult({
         action: 'sumandcheck',
