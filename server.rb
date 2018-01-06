@@ -6,19 +6,33 @@ require "prime"
 set :public_folder, File.dirname(__FILE__) + '/public'
 
 # RPC endpoint
-# to_i parses strings to integers, invalid return 0
-# 0 isn't a prime number returning false for invalid strings
+# checkprime action:
+# /api?action=checkprime&value=5
+# returns json: { result: 5, isPrime: true }
+#
+# sumandcheck action:
+# /api?action=sumandcheck&value=3,2
+# returns json: { result: 5, isPrime: true }
+#
+# Future actions
+# Return error for invalid format instead of {}
+# Metaprogram actions to be functions (action is automatically linked to same function)
+# and handle missing actions with method_missing
+
 get "/api" do
   result =
     case params["action"]
     when "checkprime"
-      { result: params["value"], isPrime: Prime.prime?(params["value"].to_i) }
+      params["value"]
     when "sumandcheck"
-      sum = params["value"].split(",").map(&:to_i).sum
-      { result: sum, isPrime: Prime.prime?(sum) }
-    else
-      {}
+      params["value"].split(",").map(&:to_i).sum
     end
 
-  json result
+  json result ? format_result(result) : {}
+end
+
+# to_i parses strings to integers, invalid returns 0
+# 0 isn't a prime number returning false for invalid strings
+def format_result(value)
+  { result: value, isPrime: Prime.prime?(value.to_i) }
 end

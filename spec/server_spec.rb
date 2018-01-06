@@ -65,4 +65,14 @@ describe "server" do
       end
     end
   end
+
+  describe "#format_result" do
+    subject { format_result(5) }
+
+    it { expect(subject).to be_kind_of(Hash) }
+
+    it "returns with correct content" do
+      expect(subject).to eq({result: 5, isPrime: true})
+    end
+  end
 end
