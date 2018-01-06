@@ -9,14 +9,17 @@ const state = {
 };
 
 const actions = {
+  // Could use async + await
   fetchResult: ({action, input}) => (state, actions) =>
     fetch(`api?action=${action}&value=${input}`)
       .then(response => response.json())
       .then(data => actions.setState(data))
       .catch(err => console.log(err)),
   check: input => (state, actions) => {
-    // If input contains only digits => checkprime
-    // If input contains only digits and plus => sumandcheck
+    // If input contains only digits
+    // => checkprime
+    // If input contains only digits and plus (last char is not plus)
+    // => sumandcheck and parse params and replace + => ,
     if (/^\d+$/.test(input)) {
       actions.fetchResult({
         action: 'checkprime',
