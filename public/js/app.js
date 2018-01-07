@@ -10,6 +10,30 @@ const state = {
 
 const actions = {
   // Could use async + await
+  // If there was two separate actions for the sum and prime checking
+  //
+  // With async await
+  //fetchResult: ({action, input}) => async (state, actions) => {
+  //  const sumDataRes = await fetch(`api?action=sumandcheck&value=${input}`);
+  //  const sumDataJson = await sumDataRes.json();
+  //  const isPrimeRes = await fetch(
+  //    `api?action=checkprime&value=${sumDataJson.result}`,
+  //  );
+  //  const isPrimeJson = await isPrimeRes.json();
+  //  await actions.setState({
+  //    result: sumDataJson.result,
+  //    isPrime: isPrimeJson.isPrime,
+  //  });
+  //},
+  //
+  // With chained API calls
+  //fetchResult: ({action, input}) => (state, actions) =>
+  //  fetch(`api?action=sumandcheck&value=${input}`)
+  //    .then(response => response.json())
+  //    .then(data => fetch(`api?action=checkprime&value=${data.result}`))
+  //    .then(response => response.json())
+  //    .then(data => actions.setState(data))
+  //    .catch(err => console.log(err)),
   fetchResult: ({action, input}) => (state, actions) =>
     fetch(`api?action=${action}&value=${input}`)
       .then(response => response.json())
